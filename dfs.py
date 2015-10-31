@@ -7,12 +7,12 @@ test_graph = {
     'C': ['G'], 
     'G': ['H'],  
 }
-# this one has a closed loop, so the searcher gets stuck
+# this one has a loop, so the searcher gets stuck
 test_graph_2 = {
     'A': ['B', 'C', 'D'], 
     'B': ['E'],
     'C': ['E', 'F', 'G'], 
-    'G': ['B', 'I', 'J'],
+    'G': ['I', 'J'],
     'J': ['K', 'L'],
 }
 
@@ -21,21 +21,14 @@ def depth_first_searcher(node_wanted, graph):
     # initial condition
     connected_nodes = graph['A']
 
-    def finder(connected_nodes):
-   
-        current_node = connected_nodes[0]
-        if current_node == node_wanted:  
-            print node_wanted
-        elif current_node != node_wanted: 
-            for node in connected_nodes:
-                if node == node_wanted:
-                    print node
-                else:
-                    if graph.has_key(node):
-                        connected_nodes = graph[node]
-                        finder(connected_nodes)
-        else:
-            pass
+    def finder(connected_nodes): 
+        for node in connected_nodes:
+            if node == node_wanted:
+                print node
+            else:
+                if graph.has_key(node):
+                    connected_nodes = graph[node]
+                    finder(connected_nodes)
 
     finder(connected_nodes)
 
@@ -43,4 +36,4 @@ def depth_first_searcher(node_wanted, graph):
 # nodes it visits to a list    
 depth_first_searcher('D', test_graph)        
 depth_first_searcher('M', test_graph)
-depth_first_searcher('L', test_graph_2)
+depth_first_searcher('B', test_graph_2)
