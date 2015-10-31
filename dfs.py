@@ -1,39 +1,34 @@
 # the searcher works on simple trees with no closed loops
+import sys
 
-# here are a couple of test graphs
-test_graph = {
+# here is a test tree
+test_tree = {
     'A': ['B', 'C'], 
     'B' : ['D', 'E', 'F'], 
-    'C': ['G'], 
+    'C': ['G'],
     'G': ['H'],  
-}
-# this one has a loop, so the searcher gets stuck
-test_graph_2 = {
-    'A': ['B', 'C', 'D'], 
-    'B': ['E'],
-    'C': ['E', 'F', 'G'], 
-    'G': ['I', 'J'],
-    'J': ['K', 'L'],
 }
 
 def depth_first_searcher(node_wanted, graph):
-    """recursive left-first depth-first search function"""
-    # initial condition
+    """A recursive left-first depth-first search function.
+     Uncomment the print statement in the finder function 
+     to print the path as it searches."""
     connected_nodes = graph['A']
 
     def finder(connected_nodes): 
         for node in connected_nodes:
             if node == node_wanted:
                 print node
+                sys.exit()
             else:
                 if graph.has_key(node):
                     connected_nodes = graph[node]
+                    # print "[%r] => %r" % (node, graph[node])
                     finder(connected_nodes)
 
     finder(connected_nodes)
 
-# could figure out its path as well by appending the 
-# nodes it visits to a list    
-depth_first_searcher('D', test_graph)        
-depth_first_searcher('M', test_graph)
-depth_first_searcher('B', test_graph_2)
+# run on a node that's not in the tree  
+depth_first_searcher('M', test_tree)
+# run on a node that is in the tree
+depth_first_searcher('G', test_tree)
