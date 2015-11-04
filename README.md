@@ -1,2 +1,2 @@
-# py-node-searcher
-a depth-first search function for graphs, written in Python
+# py-node-searchers
+depth-first and breadth-first search functions for simple trees, written in Python
